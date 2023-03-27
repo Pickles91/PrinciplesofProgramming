@@ -1,3 +1,33 @@
+{
+*********************************************************************
+  Author: Steven Sommer
+  Course: CS 415 - Principles of Programming Languages
+  Assignment Name: Pascal Program
+  Description: Create a menu to enable the broker to select and buy or sell stocks from
+	             reading in an input file of stocks -
+							 stocks.txt with initial stock values (name, volume, price) for 5 stocks.
+							 The broker has initial cash in hand - $10000.
+               view current state, and exit.
+
+            Buy                 Select a stock
+					                      then - number, new price
+                                decreases the volume by number and sets the stock-price to
+                                the new price
+
+						Sell                Select a stock
+                                then - number, new price
+                                increases the volume by number and sets the stock-price to
+                                the new price
+
+           CurrentState         Prints the current state of all the stocks - volume and price, and total value of the stock
+                                Then prints the current portfolio of the broker
+                                The stocks held by broker, and cash in hand.
+
+            Exit                 Exit the application.
+
+	
+********************************************************************* }
+
 Program BrokerMenu;
 uses crt;
 Type
@@ -16,11 +46,11 @@ var
   StockName: string;
   StockVolume: integer;
   StockPrice: real;
-  i: integer;
-  c: char; 
+  i: integer; 
+  c: char;
 begin
   i := 1;
-  assign(StockFile, 'stocks.txt');
+  assign(StockFile, 'C:\Pascal\PP\stocks.txt');
   reset(StockFile);
   while not eof(StockFile) do
   begin
@@ -31,12 +61,11 @@ begin
       read(StockFile, c);
       StockName := StockName + c;
     end;
-
     readln(StockFile, StockVolume, StockPrice);
     Stocks[i].Name := StockName;
     Stocks[i].Volume := StockVolume;
     Stocks[i].Price := StockPrice;
-    writeln('Initialized stock ', i, ' with values: ', Stocks[i].Name, ' ', Stocks[i].Volume, ' ', ' $' ,Stocks[i].Price:0:2);
+   { writeln('Initialized stock ', i, ' with values: ', Stocks[i].Name, ' ', Stocks[i].Volume, ' ', Stocks[i].Price:0:2);    }
     i := i + 1;
   end;
   close(StockFile);
@@ -51,8 +80,7 @@ Begin
    Writeln('----------------------------------');
    For i := 1 To 5 Do
       Begin
-         Writeln(Stocks[i].Name, ' Volume:', Stocks[i].Volume, ' Price:', Stocks[i].Price:0:2,
-                 ' Total Value:', Stocks[i].Volume * Stocks[i].Price:0:2);
+         Writeln(Stocks[i].Name,' (', Stocks[i].Volume, ') $', Stocks[i].Price:0:2,' Value: $', Stocks[i].Volume * Stocks[i].Price:0:2);
       End;
 End;
 
@@ -69,11 +97,11 @@ Begin
       Begin
          If Stocks[i].Volume > 0 Then
             Begin
-               Writeln(Stocks[i].Name, ' Volume:', Stocks[i].Volume, ' Price:', Stocks[i].Price:0:2,
-                       ' Total Value:', Stocks[i].Volume * Stocks[i].Price:0:2);
+               Writeln(Stocks[i].Name, ' (', Stocks[i].Volume, ') $', Stocks[i].Price:0:2,' Value: $', Stocks[i].Volume * Stocks[i].Price:0:2);
                TotalValue := TotalValue + Stocks[i].Volume * Stocks[i].Price;
             End;
       End;
+	 Writeln(' ');
    Writeln('Cash in hand:', BrokerCash:0:2);
    Writeln('Total portfolio value:', TotalValue:0:2);
 End;
@@ -150,12 +178,13 @@ Var
 Begin
    Repeat
       Writeln('----------------------------------');
-      Writeln('Main Menu');
+      Writeln('           Main Menu              ');
       Writeln('----------------------------------');
-      Writeln('1. Buy');
-      Writeln('2. Sell');
-      Writeln('3. CurrentState');
-      Writeln('4. Exit');
+      Writeln('  1. Buy');
+      Writeln('  2. Sell');
+      Writeln('  3. Current State');
+      Writeln('  4. Exit');
+			Writeln(' ');
       write('Enter your choice: ');
       Readln(Choice);
       Case Choice Of
